@@ -42,7 +42,12 @@ t = [0:0.01:10];
 u = zeros(size(t));
 sys = ss(A, B, C, D);
 
-lsim(sys, u, t, x0);
+figure();
+[Y, T, X] = lsim(sys, u, t, x0);
+plot(T,X);
+ylabel('Amplitude');
+xlabel('Time, [s]');
+legend({'State 1, x_1', 'State 2, x_2', 'State 3, x_3'});
 title('Zero-Input Response 5.12, Justin Francis');
 saveas(gcf, 'Prob5_12.png');
 
@@ -55,11 +60,16 @@ C = [0 0 0];
 D = 0;
 n = size(A);
 x0 = rand(n(1),1);
-t = [0:0.01:10];
+t = [0:0.01:1];
 u = zeros(size(t));
 sys = ss(A, B, C, D);
 
-lsim(sys, u, t, x0);
+figure();
+[Y, T, X] = lsim(sys, u, t, x0);
+plot(T,X);
+ylabel('Amplitude');
+xlabel('Time, [s]');
+legend({'State 1, x_1', 'State 2, x_2', 'State 3, x_3'});
 title('Zero-Input Response 5.13, Justin Francis');
 saveas(gcf, 'Prob5_13.png');
 
@@ -72,11 +82,16 @@ C = [0 0 0];
 D = 0;
 n = size(A);
 x0 = rand(n(1),1);
-t = [0:0.01:10];
+t = [0:0.01:1];
 u = zeros(size(t));
 sys = ss(A, B, C, D, 0.01);
 
-lsim(sys, u, t, x0);
+figure();
+[Y, T, X] = lsim(sys, u, t, x0);
+plot(T,X);
+ylabel('Amplitude');
+xlabel('Time, [s]');
+legend({'State 1, x_1', 'State 2, x_2', 'State 3, x_3'});
 title('Discrete Zero-Input Response 5.14, Justin Francis');
 saveas(gcf, 'Prob5_14.png');
 
@@ -89,10 +104,16 @@ C = [0 0 0];
 D = 0;
 n = size(A);
 x0 = rand(n(1),1);
-t = [0:0.01:10];
+t = [0:0.01:1];
 u = zeros(size(t));
 sys = ss(A, B, C, D, 0.01);
 
-lsim(sys, u, t, x0);
+figure();
+
+[Y, T, X] = lsim(sys, u, t, x0);
+plot(T,X);
+ylabel('Amplitude');
+xlabel('Time, [s]');
+legend({'State 1, x_1', 'State 2, x_2', 'State 3, x_3'});
 title('Discrete Zero-Input Response 5.15, Justin Francis');
 saveas(gcf, 'Prob5_15.png');
