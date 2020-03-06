@@ -25,7 +25,11 @@ x0 = rand(2,1);
 u = zeros(length(t), 1);
 
 figure();
-lsim(sys, u, t, x0);
+[Y, T, X] = lsim(sys, u, t, x0);
+plot(T,X);
+ylabel('Amplitude');
+xlabel('Time, [s]');
+legend({'State 1, x_1', 'State 2, x_2'});
 title('Zero-Input Response 5.11, Justin Francis');
 saveas(gcf, 'Prob5_11.png');
 
