@@ -87,6 +87,7 @@ Co_bar = inv(Co_barInv);
 k = k_bar*Co_bar*Co_inv;
 
 %% prob 6
+cle
 A = [[1 1 -2];[0 1 1];[0 0 1]];
 B = [1 0 1].';
 C = [2 0 0];
@@ -100,9 +101,9 @@ Gs = tf(sysDesired);
 
 p = dcgain(sysDesired)^-1;
 
-% plots for x0 = [0 0 0]
-close all;
+% plots
 x0 = [0 0 0].';
+x0_1 = [2 0 -2].';
 r = 1;
 
 t = linspace(0,10);
@@ -112,51 +113,9 @@ u = p*r*ones(size(t));
 
 figure();
 plot(t,Y);
-title('Justin Francis, Ouput of Zero State, x(0) = [0 0 0]');
+title('Justin Francis, Ouput of Zero State x(0) = [0 0 0]');
 xlabel('Time, t[s]');
 ylabel('Output, y(t)[units]');
 grid();
 
 figure();
-plot(t, u);
-title('Justin Francis, Input of Zero State, x(0) = [0 0 0]');
-xlabel('Time, t[s]');
-ylabel('Input, u(t)[units]');
-grid();
-
-figure();
-plot(t, X);
-title('Justin Francis, States of Zero State, x(0) = [0 0 0]');
-xlabel('Time, t[s]');
-ylabel('States, x(t)[units]');
-grid();
-legend({'x1', 'x2', 'x3'});
-
-
-%plots for x0 = [2 0 -2]
-x0 = [2 0 -2].';
-[Y,T,X] = lsim(sysDesired, u, t, x0);
-
-figure();
-plot(t,Y);
-title('Justin Francis, Ouput of Zero State, x(0) = [0 0 0]');
-xlabel('Time, t[s]');
-ylabel('Output, y(t)[units]');
-grid();
-
-figure();
-plot(t, u);
-title('Justin Francis, Input of Zero State, x(0) = [0 0 0]');
-xlabel('Time, t[s]');
-ylabel('Input, u(t)[units]');
-grid();
-
-figure();
-plot(t, X);
-title('Justin Francis, States of Zero State, x(0) = [0 0 0]');
-xlabel('Time, t[s]');
-ylabel('States, x(t)[units]');
-grid();
-legend({'x1', 'x2', 'x3'});
-
-publish('MEEN5210_HW7_Controllability.m', 'pdf');
