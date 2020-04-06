@@ -158,5 +158,3 @@ xlabel('Time, t[s]');
 ylabel('States, x(t)[units]');
 grid();
 legend({'x1', 'x2', 'x3'});
-
-publish('MEEN5210_HW7_Controllability.m', 'pdf');
