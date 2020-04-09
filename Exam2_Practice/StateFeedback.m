@@ -32,3 +32,4 @@ K_check = place(A,B, desEigVals);
 % >>>The st eqns become A_n
 % = (A-LC), find the char poly of A_n, set equal to the desired charpoly
 % with desired eigenvals, solve for L
+
