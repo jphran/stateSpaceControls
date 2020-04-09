@@ -40,7 +40,7 @@ D = [0];
 Ob = obsv(A,C);
 isObservable = (rank(Ob) == length(A));
 
-%% reduce the state eqn to a controllable one assuming its uncontrollable
+%% Kalman Decomp: reduce the state eqn to a controllable one assuming its uncontrollable
 % >>>form P_inv matrix with lin indie cols of Co and any other col that
 % makes P_inv full rank. Conduct similarity transform (x_tild = P*x, 
 % A_tild = P*A*P_inv, B_tild = P*B, C_tild = C*P_inv, D_tild = D).

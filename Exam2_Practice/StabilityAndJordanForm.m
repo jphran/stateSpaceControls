@@ -6,7 +6,7 @@
 clc; clear; close all;
 
 %% is it stable?
-% >>>BIBO is defined as all of the poles of the tf are < 1 or < 0 for discrete
+% >>>BIBO is defined as all of the poles of the tf (C(sI-A)^(-1)B + D) are < 1 or < 0 for discrete
 % and cont time sys respectively
 % >>>MS is defined as all eigen vals of the sys are <= 1 or <= 0 for disc
 % and cont time sys respectively and that all eig vals that == 1 or == 0
