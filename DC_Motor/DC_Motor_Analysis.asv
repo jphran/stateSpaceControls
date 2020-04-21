@@ -1,0 +1,64 @@
+% Jacob Anderson and Justin Francis
+% MEEN 5210, State Space Lab
+% Dr. Abbot, U of U
+% DC Motor Lab
+
+%% part 1, find A, B matrix
+sim('StateSpaceLab2019b.slx');
+enc = out.encoder * (2*pi) / 4096;
+t = out.time; 
+
+dxdt = (enc(end)-enc())/(t(4000)-t(3000));
+
+tach = out.tachometer;
+
+tach = medfilt1(tach,20);
+
+p = polyfit(t(3500:end), enc(3500:end), 2);
+
+%% part 2
+A = [[-.0714 0];[1 0]];
+B = [3.40786 0].';
+C = [0 1];
+D = [0];
+
+isControllable = (rank(ctrb(A,B)) == length(A));
+
+% using r = thetaDes 
+% we want Ts = 1 [s], and crit damped
+% Tc = 1/4*Ts
+Ts = 1; %[s]
+Tc = 1/4*Ts; 
+p = -1/Tc; % desired poles
+
+K = place(A, B, [p, (p+.00001)]);
+
+dcGain = C * inv(-(A-B*K))* B + D;
+feedForwardGain = 1/dcGain;
+
+%simulink feedback analysis
+sim('Sim2.slx');
+vel = out.vel;
+t = out.tout;
+
+figure();
+plot(t,vel);
+
+%% settling time
+Ts_check = vel > 0.96*vel(end);
+t_check = t(Ts_check);
+
+Ts_sim = t_check(1);
+
+%% rmse steady state
+velDes = 1;
+vel_check = vel(Ts_check);
+
+RSME = sqrt(mean((vel_check - velDes).^2));
+
+%% robust tracking and distrubance rejection
+transf
+
+syms ka
+An = [[A+B*K B*ka];[-C 0]];
+
