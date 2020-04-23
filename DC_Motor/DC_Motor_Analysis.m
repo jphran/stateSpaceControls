@@ -17,8 +17,8 @@ tach = medfilt1(tach,20);
 p = polyfit(t(3500:end), enc(3500:end), 2);
 
 %% part 2
-A = [[-.0714 0];[1 0]];
-B = [3.40786 0].';
+A = [-2.6788 0;1 0];
+B = [12.05465;0];
 C = [0 1];
 D = [0];
 
@@ -37,12 +37,12 @@ dcGain = C * inv(-(A-B*K))* B + D;
 feedForwardGain = 1/dcGain;
 
 %simulink feedback analysis
-sim('Sim2.slx');
-vel = out.vel;
-t = out.tout;
-
-figure();
-plot(t,vel);
+% sim('Sim2.slx');
+% vel = out.vel;
+% t = out.tout;
+% 
+% figure();
+% plot(t,vel);
 
 %% settling time
 Ts_check = vel > 0.96*vel(end);
@@ -62,7 +62,26 @@ zeros = roots(num);
 % its controllable because no zeros at s = 0
 
 syms ka k1 k2
+%char eqn desired: s^3+12s^2+48s+64
 K = [k1 k2];
 An = [[A+B*K B*ka];[-C 0]];
-% An = 
+charEqn = charpoly(An);
 % Kn = place(A,B, [p+.0001 p-.0001 p]);
+% eqn1 = 64 == (6786164656010219*ka)/562949953421312;
+% eqn2 = 48 == -(6786164656010219*k2)/562949953421312;
+% eqn3 = 12 == 6697/2500 - (6786164656010219*k1)/562949953421312;
+
+eqn1 = 12 == charEqn(2);
+eqn2 = 48 == charEqn(3);
+eqn3 = 64 == charEqn(4);
+
+[meatMat,potatoesMat] = equationsToMatrix([eqn1, eqn2, eqn3], [k1, k2, ka]);
+K = double(linsolve(meatMat, potatoesMat));
+
+%check
+K1 = K(1);
+K2 = K(2);
+Ka = K(3);
+Acheck = [[A+B*[K1 K2] B*Ka];[-C 0]];
+Bcheck = [0 0 1];
+Kcheck = place(Acheck,B, [p+.0001 p-.0001 p]); 
