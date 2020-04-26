@@ -8,10 +8,9 @@ clc;
 clear; 
 close all;
 
-%load system model
 load('mathModel.mat');
 
-%check thm 8.5
+%check 
 [num, den] = ss2tf(A,B,C,D);
 zeros = roots(num);
 % its controllable because no zeros at s = 0
@@ -38,9 +37,9 @@ encGain = 2*pi /4096;
 
 rtSim = sim('part3model.slx');
 
-Ts = findSettlingTime(rtSim.tout, rtSim.pos)
+Ts = findSettlingTime(rtSim.tout, rtSim.pos);
 
-RMSE = findRMSE(rtSim.tout, rtSim.pos, 1)
+RMSE = findRMSE(rtSim.tout, rtSim.pos, 1);
 
 %plot 
 figure();
@@ -53,12 +52,6 @@ ylabel('Position, \theta[rad]');
 grid();
 legend('Location', 'southeast');
 
-%save vars
 A_rt_doub = [[A+B*K_rt B*ka];[-C 0]];
+%save vars
 save('robust.mat', 'A_rt', 'A_rt_doub', 'encGain');
-
-% commentary
-comments = ['The difference between the full state and robust controllers' ... 
-    'was %.3f percent increase. The difference between the RMSE was %.3f ' ...
-    'percent increase'];
-fprintf(comments, 31.496, 40.496);

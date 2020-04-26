@@ -1,0 +1,37 @@
+% Jacob Anderson and Justin Francis
+% MEEN 5210, State Space Lab
+% Dr. Abbot, U of U
+% DC Motor Lab
+
+%% part 5
+clc;
+clear; 
+close all;
+
+load('mathModel.mat');
+load('lqrPoles.mat');
+
+%check observability
+Ob = obsv(A, C);
+isObservable = (rank(Ob) == length(A));
+
+%design obsv
+p = 5 * real(max(CLP));
+L_clo = place(A.', C.', [p p+.0001]).';
+
+%sim 
+cloSim = sim('part5model.slx');
+
+%plot 
+figure();
+hold on;
+plot(cloSim.tout, cloSim.pos);
+plot(Ts, lqrSim.pos(find(lqrSim.tout == Ts)), 'ro', 'DisplayName', 'Settling Time = 0.320 [s]');
+title('Closed-Loop Observer Full State Feedback');
+xlabel('Time, t[s]');
+ylabel('Position, \theta[rad]');
+grid();
+
+%find Ts etc
+Ts = findSettlingTime(cloSim.tout, cloSim.pos)
+RMSE = findRMSE(cloSim.tout, cloSim.pos, 1)

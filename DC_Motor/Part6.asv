@@ -1,0 +1,28 @@
+% Jacob Anderson and Justin Francis
+% MEEN 5210, State Space Lab
+% Dr. Abbot, U of U
+% DC Motor Lab
+
+%% part 6
+clc;
+% clear; 
+close all;
+
+load('mathModel.mat');
+load('robust.mat');
+load('lqrPoles.mat');
+
+%find obsv gains
+p = real(max(CLP));
+p_des = [p p+.0001];
+L_clo = place(A.', C.', p_des).';
+
+cloSim = sim('part6model.slx');
+
+%plot 
+figure();
+hold on;
+plot(cloSim.tout, cloSim.tachometer, 'DisplayName', 'Raw Velocity');
+plot(cloSim.tout, cloSim.simStates(:,1), 'LineWidth', 10, 'DisplayName', 'Simulated Velocity');
+grid();
+legend();

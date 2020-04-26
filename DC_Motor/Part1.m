@@ -33,14 +33,14 @@ A21 = 1; %given from ss model
 A12 = 0; %given
 A22 = 0; %given
 
-A = [[A11 A12];[A21 A22]];
+A = [[A11 A12];[A21 A22]]
 
 B1 = dcGain/tau;
 B2 = 0; %given model
 
-B = [B1 B2].';
+B = [B1 B2].'
 
-C = [0 1];
-D = [0];
+C = [0 1]
+D = [0]
 
 save('mathModel', 'A', 'B', 'C', 'D');
